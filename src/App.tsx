@@ -1,13 +1,14 @@
+import { Button } from "@/components/ui/button";
 import "./App.css";
 import { useFinance } from "./hooks/useFinance";
 
 function App() {
-  const { transactions, isLoading, addTransaction } = useFinance();
+  const { transactions, isLoading, addTransaction, isAdding } = useFinance();
   const handleAdd = () => {
     addTransaction({
-      description: "Nova Compra",
-      amount: -50.0,
-      category: "Alimentação",
+      description: "Nova Transação",
+      amount: -150.0,
+      category: "Desktop",
     });
   };
 
@@ -15,12 +16,14 @@ function App() {
     <div className="p-6 max-w-4xl mx-auto">
       <header className="flex justify-between items-center mb-8">
         <h1 className="text-xl font-bold tracking-tight">Finanças Desktop</h1>
-        <button
+        <Button
           onClick={handleAdd}
-          className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md text-sm transition-colors"
+          disabled={isAdding}
+          variant="default"
+          size="sm"
         >
-          + Adicionar Transação
-        </button>
+          {isAdding ? "Gravando..." : "+ Adicionar Transação"}
+        </Button>
       </header>
 
       {isLoading ? (
